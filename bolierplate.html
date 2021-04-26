@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Title</title>
+    <meta name="description" content="page description" />
+    <link rel="canonical" href="{{ currentUrl }}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@{{site.author.social.twitter.name}}">
+    <meta name="twitter:title" content="{{ pageTitle }}">
+    <meta name="twitter:description" content="{{ description or site.description }}">
+    <meta name="twitter:image" content="{{ site.url }}{{ image or site.image }}" />
+    <meta property="og:site_name" content="{{ site.name }}" />
+    <meta property="og:title" content="{{ pageTitle }}" />
+    <meta property="og:description" content="{{ description or site.description }}" />
+    <meta property="og:image" content="{{ socialImage }}" />
+    <link rel="icon" href="/favicon.png">
+    <link rel="preload" href="/fonts/baloo-2-v1-latin-500.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="preload" href="/fonts/baloo-2-v1-latin-regular.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/todo.css">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        body {
+            font-size: 1rem;
+            min-height: 100vh;
+            text-rendering: optimizeSpeed;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                font-size: 1.25rem;
+            }
+        }
+        .sr-only:not(:focus):not(:active),
+        .sr-skip-link:not(:focus),
+        .visually-hidden {
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: auto;
+            margin: 0;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+            white-space: nowrap;
+        }
+
+        :focus:not(:focus-visible) {
+            outline: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid inherit;
+        }
+        ul,
+        ol {
+            padding-left: 0;
+            margin: 0;
+        }
+        ul li, 
+        ol li {
+            list-style-type: none; /* remove bullets */
+        }
+        .container,
+        .wrapper {
+            padding: 0 1.33rem;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 75rem;
+        }
+        .article-container {
+            width: 100%;
+            max-width: 75ch;
+            padding: 0 1.33rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* 
+            HEADER
+        */
+        .site-header {
+            position: relative;
+        
+        }
+        .site-header__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0 1.8rem;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 2400px
+        }
+        /* 
+            NAVIGATION
+        */
+        .nav-list,
+        .site-nav__list {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: auto;
+            padding-left: 0;
+            list-style: none;
+            text-transform: lowercase;
+            font-weight: 700;
+        }
+        .site-nav__list > li + li {
+            margin-left: 1.5em;
+        }
+        .site-nav__item {
+            margin-top: 0;
+        }
+        .site-nav__item > a {
+            display: block;
+            padding: 0.5em;
+            
+        }
+        .site-nav__item > a:hover,
+        .site-nav__item.active a,
+        [aria-current="page"] {
+            text-decoration-line: underline;
+            text-decoration-style: solid;
+            text-decoration-color: red;
+            text-decoration-thickness: 3px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="sr-skip-link">skip to main content</a>
+
+
+    <!-- HEADER (SITE HEADER) -->
+    <header id="site-header" class="site-header" role="banner" >
+        <div class="site-header__inner">
+
+            <!-- LOGO -->
+            <a class="site-header__brand" href="/" aria-label="jscribbles - home">
+                <img src="imgages/sitelogo.png" alt="logo for the site">
+                <strong>Brand Name</strong>
+            </a>
+            <!-- LOGO -->
+
+            <!-- SITE NAVIGATION -->
+            <nav id="site-nav" class="site-nav" aria-label="Primary">
+                <ul class="site-nav__list">
+                    <li class="site-nav__item">
+                        <a
+                            href="/"
+                            class="site-nav__link"
+                            aria-current="page"
+                        >
+                            home
+                        </a>
+                    </li>
+                    <li class="site-nav__item">
+                        <a
+                            href="/"
+                            class="site-nav__link"
+                        >
+                            about
+                        </a>
+                    </li>
+                    <li class="site-nav__item">
+                        <a
+                            href="/"
+                            class="site-nav__link"
+                        >
+                            art
+                        </a>
+                    </li>
+                    <li class="site-nav__item">
+                        <a
+                            href="/"
+                            class="site-nav__link"
+                        >
+                            writings
+                        </a>
+                    </li>
+                    <li class="site-nav__item">
+                        <a
+                            href="/"
+                            class="site-nav__link"
+                        >
+                            contact
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- END SITE NAVIGATION -->
+            
+        </div>
+    </header>
+    <!-- HEADER END-->
+    
+
+
+
+    <!-- MAIN STARTS HERE -->
+    <main class="main" id="main" tabindex="-1">
+
+        <!-- The POST LIST LOOP -->
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
+            <article 
+                class="card" 
+                role="article" 
+                id="<?php the_ID();?>"
+                aria-label="<?php the_title();?> - title"
+                >
+                    <h2 class="title">
+                        <a href="<?php the_permalink();?>"><?php the_title();?></a>
+                    </h2>
+                    <time datetime="<?php the_date('Y-m-d');?>"><?php the_time('F j, Y');?></time>
+                    <span aria-hidden="true" focusable="false">&sdot;</span><br>
+                    <div class="categories">
+                        <?php
+                            $categories = get_the_category();
+                            $separator = ' ';
+                            $output = '';
+                            if ( ! empty( $categories ) ) {
+                                foreach( $categories as $category ) {
+                                    $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+                                }
+                                echo trim( $output, $separator );
+                            }
+                        ?>
+                    </div>
+                    <!-- <div class="postmetadata"><?php _e( 'Posted in' ); ?> <?php the_category( ', ' ); ?></div> -->
+                    <div><?php the_tags( 'Post tags: ', ' | ', '<br />' ); ?></div>
+                    <div class="post-excerpt"><?php the_excerpt();?></div>
+            </article>
+
+        <?php endwhile; ?>
+        <!-- END POST LIST LOOP -->
+
+
+
+
+        <!-- SINGLE POST -->
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+            
+            <article 
+                class="post" 
+                role="article" 
+                id="<?php the_ID();?>"
+                aria-label="<?php the_title();?> - title"
+            >
+                <header>
+                    <h1 class="title">
+                        <?php the_title(); ?>
+                    </h1>
+                    <div class="post__meta">
+                        <time datetime="<?php the_date('Y-m-d');?>"><?php the_time('F j, Y');?></time>
+                        <span aria-hidden="true" focusable="false">&sdot;</span><br>
+                        <div class="categories">
+                        <?php
+                            $categories = get_the_category();
+                            $separator = ' ';
+                            $output = '';
+                            if ( ! empty( $categories ) ) {
+                                foreach( $categories as $category ) {
+                                    $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+                                }
+                                echo trim( $output, $separator );
+                            }
+                        ?>
+                        </div>
+                        <div><?php the_tags( 'Post tags: ', ' | ', '<br />' ); ?></div>
+                    </div>
+                </header>
+
+                <div class="content">
+                    <?php the_content(); ?>
+                </div>
+
+                <div class="post__footer container">
+
+                </div>
+
+            </article>
+
+        <?php endwhile; ?>
+        <!-- END SINGLE POST -->
+
+
+
+        <!-- Category List  -->
+        <h2>Categories</h2>
+        <?php
+            $categories = get_categories();
+            $separator = ' ';
+            foreach( $categories as $category ) {
+                echo '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+            }
+        ?>
+            <!-- END category list -->
+
+        
+
+
+    </main>
+    <!-- MAIN ENDS HERE -->
+    
+
+
+
+
+    <!-- FOOTER STARTS HERE -->
+    <footer id="site-footer" class="site-footer footer" role="contentinfo">
+
+        <!-- footer top -->
+        <section class="site-footer__top container">
+            <div class="col-1">
+                <strong>about me</strong>
+                <p>Paragraph about me</p>
+            </div>
+
+            <div class="col-2">
+                <strong>links</strong>
+                <nav class="site-nav site-footer__nav" aria-label="Footer">
+                    <ul class="site-nav__list">
+                        <li class="site-nav__item">
+                            <a
+                                href="/"
+                                class="site-nav__link"
+                                aria-current="page"
+                            >
+                                home
+                            </a>
+                        </li>
+                        <li class="site-nav__item">
+                            <a
+                                href="/"
+                                class="site-nav__link"
+                                aria-current="page"
+                            >
+                                about
+                            </a>
+                        </li>
+                        <li class="site-nav__item">
+                            <a
+                                href="/"
+                                class="site-nav__link"
+                                aria-current="page"
+                            >
+                                art
+                            </a>
+                        </li>
+                        <li class="site-nav__item">
+                            <a
+                                href="/"
+                                class="site-nav__link"
+                                aria-current="page"
+                            >
+                                writings
+                            </a>
+                        </li>
+                        <li class="site-nav__item">
+                            <a
+                                href="/"
+                                class="site-nav__link"
+                                aria-current="page"
+                            >
+                                contact
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            
+            </div>
+            
+            <div class="col-3">
+                <strong>social</strong>
+                <ul class="social-icons">
+                    <li>
+                        <a href="{{ site.author.social.twitter.url }}" title="twitter" rel="me">
+                            <svg class="icon" aria-hidden="true" focusable="false" width="22" height="22">
+                                <use xlink:href="#icon-twitter"></use>
+                            </svg>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ site.author.social.github.url }}" title="GitHub" rel="me">
+                            <svg class="icon" aria-hidden="true" focusable="false" width="22" height="22">
+                                <use xlink:href="#icon-github"></use>
+                            </svg>
+                            <span class="sr-only">GitHub</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ site.author.social.codepen.url }}" title="CodePen" rel="me">
+                            <svg class="icon" aria-hidden="true" focusable="false" width="22" height="22">
+                                <use xlink:href="#icon-codepen"></use>
+                            </svg>
+                            <span class="sr-only">CodePen</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ site.author.social.devto.url }}" title="DevTo" rel="me">
+                            <svg class="icon" aria-hidden="true" focusable="false" width="22" height="22">
+                                <use xlink:href="#icon-devto"></use>
+                            </svg>
+                            <span class="sr-only">DevTo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ site.author.social.linkedin.url }}" title="LinkedIn" rel="me">
+                            <svg class="icon" aria-hidden="true" focusable="false" width="20" height="20">
+                                <use xlink:href="#icon-linkedin"></use>
+                            </svg>
+                            <span class="sr-only">LinkedIn</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </section>
+        <!-- end footer top -->
+
+        <!-- footer bottom -->
+        <section class="site-footer__bottom container">
+            <span class="col-left" style="font-size: 0.8em;">
+                &copy;2021 <a class="home-link" rel="me" href="jscribbles.com">Jamie Jones</a> |
+                <a href="/privacy/">Privacy Policy</a> |
+                <a href="/legal/">Terms</a>
+            </span>
+            
+            <span class="col-right">
+                <a href="#" class="to-top-link" aria-label="Back to top" title="Back to top" >
+                    <span>back to top </span>
+                </a>
+            </span>
+        </section>
+        <!-- end footer bottom -->
+
+
+    </footer>
+    <!-- FOOTER ENDS HERE -->
+      
+      
+</body>
+</html>
