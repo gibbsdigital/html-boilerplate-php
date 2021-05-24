@@ -151,8 +151,28 @@
  
         <?php endwhile; ?>
         <!-- END POST LIST LOOP -->
+   
+   
+   
+   
+   
+   
+   <!-- PAGINATION MENU -->
+   <?php	
+         the_posts_pagination( array(
 
+            'prev_text'          => '&laquo; Previous' . '<span class="sr-only">' . __( 'Previous page', 'dabbleofcolors' ) . '</span>',
+            'next_text'          => '<span class="sr-only">' . __( 'Next page', 'dabbleofcolors' ) . '</span>' . 'Next &raquo;',
+            'before_page_number' => '<span class="meta-nav sr-only">' . __( 'Page', 'dabbleofcolors' ) . ' </span>',
 
+	) ); ?>
+<!-- PAGINATION MENU -->
+   
+   
+   
+   
+   
+  
 
 
         <!-- Category List  -->
@@ -358,6 +378,10 @@
                 </div>
 
             </article>
+
+
+previous_post_link();
+next_post_link(); 
 
         <?php endwhile; ?>
         <!-- END SINGLE POST -->
