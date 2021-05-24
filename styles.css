@@ -66,6 +66,7 @@ a:focus {
 * 
 */
 :root {
+   --color-links: #2B87EB;
    --font-primary: 'Fira Sans' sans-serif;
    --font-family-display: 'Roboto', Sans-Serif;
 }
@@ -187,6 +188,14 @@ ol li {
     list-style-type: none; /* remove bullets */
 }
 
+
+a {
+    color: var(--color-links);
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.0rem;
+    letter-spacing: 0.1125rem;
+}
 
 a:link {
 
@@ -321,3 +330,29 @@ a:active {
     text-decoration-color: red;
     text-decoration-thickness: 3px;
 }
+
+
+
+
+
+/* 
+<h2 class="post-title">
+    <a href="">post title</a>
+</h2>
+*/
+.post-title a {
+    font-family: 'Roboto',  Sans-Serif;
+    color: #EB573A;
+    font-size: 1.5625rem;
+    width: 950px;
+    max-width: 100%;
+    line-height: 135%;
+    font-weight: normal;
+    font-style: normal;
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: 3px;
+}
+
+
+
