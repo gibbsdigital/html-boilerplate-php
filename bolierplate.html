@@ -206,92 +206,64 @@
 
 
 
-    <!-- MAIN STARTS HERE -->
+    <!-- MAIN STARTS HERE -  this goes in index.php -->
     <main class="main" id="main" tabindex="-1">
 
         <!-- The POST LIST LOOP -->
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-
-            <article 
-                class="card" 
-                role="article" 
-                id="<?php the_ID();?>"
-                aria-label="<?php the_title();?> - title"
-                >
-                    <h2 class="title">
+       
+       
+            <!-- article Card -->
+            <article class="card">
+                <figure class="card__img">
+                    <?php if (has_post_thumbnail()) {
+                        $thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', true );
+                        $alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+                        $src = the_permalink();
+                        the_post_thumbnail( 'large', array('src' => $src, 'alt' => $alt, 'loading' => 'lazy' ) ); ?>
+                    } 
+                    ?>
+                </figure>
+                <div class="card__body">
+                    <h2 class="card__title" id="post-title">
                         <a href="<?php the_permalink();?>"><?php the_title();?></a>
                     </h2>
-                    <time datetime="<?php the_date('Y-m-d');?>"><?php the_time('F j, Y');?></time>
-                    <span aria-hidden="true" focusable="false">&sdot;</span><br>
-                    <div class="categories">
-                        <?php
-                            $categories = get_the_category();
-                            $separator = ' ';
-                            $output = '';
-                            if ( ! empty( $categories ) ) {
-                                foreach( $categories as $category ) {
-                                    $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+                    <div class="card-meta">
+                        <time datetime="<?php the_date('Y-m-d');?>"><?php the_time('F j, Y');?></time>
+                        <span aria-hidden="true" focusable="false">&#124;</span>
+                        <span><?php read_time();?></span><br>
+                        Categories: 
+                        <div class="categories">
+                            <?php
+                                $categories = get_the_category();
+                                $separator = ' ';
+                                $output = '';
+                                if ( ! empty( $categories ) ) {
+                                    foreach( $categories as $category ) {
+                                        $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+                                    }
+                                    echo trim( $output, $separator );
                                 }
-                                echo trim( $output, $separator );
-                            }
-                        ?>
+                            ?>
+                        </div>
+                        <span aria-hidden="true" focusable="false">&#124;</span>
+                        Tags: 
+                        <div><?php the_tags( 'Post tags: ', ' | ', '<br />' ); ?></div>
                     </div>
-                    <!-- <div class="postmetadata"><?php _e( 'Posted in' ); ?> <?php the_category( ', ' ); ?></div> -->
-                    <div><?php the_tags( 'Post tags: ', ' | ', '<br />' ); ?></div>
-                    <div class="post-excerpt"><?php the_excerpt();?></div>
+                    <p class="card__text">
+                        <div class="post-excerpt"><?php the_excerpt();?></div>
+                    </p>
+                    <div class="card__footer"></div>
+                </div>      
             </article>
-
+            <!-- article Card -->
+   
+   
+   
+ 
         <?php endwhile; ?>
         <!-- END POST LIST LOOP -->
 
-
-
-
-        <!-- SINGLE POST -->
-        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-            
-            <article 
-                class="post" 
-                role="article" 
-                id="<?php the_ID();?>"
-                aria-label="<?php the_title();?> - title"
-            >
-                <header>
-                    <h1 class="title">
-                        <?php the_title(); ?>
-                    </h1>
-                    <div class="post__meta">
-                        <time datetime="<?php the_date('Y-m-d');?>"><?php the_time('F j, Y');?></time>
-                        <span aria-hidden="true" focusable="false">&sdot;</span><br>
-                        <div class="categories">
-                        <?php
-                            $categories = get_the_category();
-                            $separator = ' ';
-                            $output = '';
-                            if ( ! empty( $categories ) ) {
-                                foreach( $categories as $category ) {
-                                    $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
-                                }
-                                echo trim( $output, $separator );
-                            }
-                        ?>
-                        </div>
-                        <div><?php the_tags( 'Post tags: ', ' | ', '<br />' ); ?></div>
-                    </div>
-                </header>
-
-                <div class="content">
-                    <?php the_content(); ?>
-                </div>
-
-                <div class="post__footer container">
-
-                </div>
-
-            </article>
-
-        <?php endwhile; ?>
-        <!-- END SINGLE POST -->
 
 
 
@@ -310,7 +282,7 @@
 
 
     </main>
-    <!-- MAIN ENDS HERE -->
+    <!-- MAIN ENDS HERE - end of index.php -->
     
 
 
@@ -452,3 +424,91 @@
       
 </body>
 </html>
+
+
+
+
+ <!-- SINGLE POST - goes in single.php -->
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+            
+            <article 
+                class="post" 
+                role="article" 
+                id="<?php the_ID();?>"
+                aria-label="<?php the_title();?> - title"
+            >
+                <header>
+                    <h1 class="title">
+                        <?php the_title(); ?>
+                    </h1>
+                    <div class="post__meta">
+                        <time datetime="<?php the_date('Y-m-d');?>"><?php the_time('F j, Y');?></time>
+                        <span aria-hidden="true" focusable="false">&sdot;</span><br>
+                        <div class="categories">
+                        <?php
+                            $categories = get_the_category();
+                            $separator = ' ';
+                            $output = '';
+                            if ( ! empty( $categories ) ) {
+                                foreach( $categories as $category ) {
+                                    $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+                                }
+                                echo trim( $output, $separator );
+                            }
+                        ?>
+                        </div>
+                        <div><?php the_tags( 'Post tags: ', ' | ', '<br />' ); ?></div>
+                    </div>
+                </header>
+
+                <div class="content">
+                    <?php the_content(); ?>
+                </div>
+
+                <div class="post__footer container">
+
+                </div>
+
+            </article>
+
+        <?php endwhile; ?>
+        <!-- END SINGLE POST -->
+
+
+
+
+
+
+
+<!-- article without img 
+
+ <article 
+                class="card" 
+                role="article" 
+                id="<?php the_ID();?>"
+                aria-label="<?php the_title();?> - title"
+                >
+                    <h2 class="title">
+                        <a href="<?php the_permalink();?>"><?php the_title();?></a>
+                    </h2>
+                    <time datetime="<?php the_date('Y-m-d');?>"><?php the_time('F j, Y');?></time>
+                    <span aria-hidden="true" focusable="false">&sdot;</span><br>
+                    <div class="categories">
+                        <?php
+                            $categories = get_the_category();
+                            $separator = ' ';
+                            $output = '';
+                            if ( ! empty( $categories ) ) {
+                                foreach( $categories as $category ) {
+                                    $output .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+                                }
+                                echo trim( $output, $separator );
+                            }
+                        ?>
+                    </div>
+                    <div class="postmetadata"><?php _e( 'Posted in' ); ?> <?php the_category( ', ' ); ?></div> 
+                    <div><?php the_tags( 'Post tags: ', ' | ', '<br />' ); ?></div>
+                    <div class="post-excerpt"><?php the_excerpt();?></div>
+            </article>
+
+article without img -->
