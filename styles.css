@@ -47,6 +47,42 @@ ul li,
 ol li {
     list-style-type: none; /* remove bullets */
 }
+
+
+a:link {
+
+}
+a:visited {
+
+}
+a:hover {
+
+}
+a:active {
+    
+}
+
+/* 
+*
+* link hover effects 
+*
+* slidein effect example:
+*      <a class="slidein class2 class3">link hover effect</a>
+*/
+.slidein:hover::after {
+    width: 100%;
+}
+.slidein::after {
+    content: "";
+    display: block;
+    height: 0.1875rem;
+    width: 0%;
+    background: #27CBC9;
+    transition: .3s;
+}
+
+
+
 .container,
 .wrapper {
     padding: 0 1.33rem;
